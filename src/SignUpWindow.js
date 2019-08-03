@@ -24,7 +24,7 @@ const SignUpWindow = () => {
         }
         fetch(
             // URL
-            'http://localhost:5000/auth/register', 
+            `${process.env.REACT_APP_API_URL}auth/register`, 
             // Data
             {
                 method: 'POST',
@@ -33,7 +33,7 @@ const SignUpWindow = () => {
             }
         )
         .then(res => {
-            if(res.status === "400") {
+            if(!res.ok) {
                 // Handle the error
                 setLocalState({ 
                     ...localState, 

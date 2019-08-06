@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from './App'; 
 
-const LoginWindow = () => {
+const LoginWindow = (prop) => {
 
     let email;
     let password;
@@ -56,6 +56,7 @@ const LoginWindow = () => {
     return(<div className="LoginWindow">
     <div className="container">
 
+        <h2>Login</h2>        
         <label>Email</label>
         <input ref={comp=> email = comp} type="text" className="form-control" />
 
@@ -64,6 +65,7 @@ const LoginWindow = () => {
 
         <button onClick={loginUser} className="btn btn-primary">Login</button>
         <button onClick={closeWindow} className="btn btn-danger">Cancel</button>
+        <a onClick={prop.panelFunction}>new User? CLick here</a>
 
         {
             localState.successMessage && 

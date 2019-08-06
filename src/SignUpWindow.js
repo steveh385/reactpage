@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from './App'; 
 
-const SignUpWindow = () => {
+const SignUpWindow = (prop) => {
 
     let name;
     let email;
@@ -33,7 +33,7 @@ const SignUpWindow = () => {
             }
         )
         .then(res => {
-            if(!res.ok) {
+            if(res.status === "400") {
                 // Handle the error
                 setLocalState({ 
                     ...localState, 
@@ -62,6 +62,7 @@ const SignUpWindow = () => {
     }
     return(<div className="SignUpWindow">
         <div className="container">
+            <h2>Register</h2>
 
             <label>Name</label>
             <input ref={comp=> name = comp} type="text" className="form-control"/>
@@ -77,6 +78,7 @@ const SignUpWindow = () => {
             
             <button onClick={registerUser} className="btn btn-primary">Register</button>
             <button onClick={closeSignUp} className="btn btn-danger">Cancel</button>
+            <a onClick={prop.panelFunction}>Already a user? Signin</a>
 
             {
                 localState.successMessage && 

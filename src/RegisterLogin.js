@@ -1,16 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
 import SignUpWindow from './SignUpWindow';
 import LoginWindow from './LoginWindow';
 
+
+
 const RegisterLogin = () => {
+
+    const [localState, setLocalState] = useState({ registerPanel: true});
+    const changePanel = () => {
+        if (localState.registerPanel){
+            setLocalState({...localState, registerPanel:false})
+        }else {
+            setLocalState({...localState, registerPanel:true})
+        }
+        
+    }
+
     return (
         <div className="RegisterLogin">
             <div className="container">
-                <h2>Register</h2>
-                <SignUpWindow />
-                <hr />
-                <h2>Login</h2>
-                <LoginWindow />
+                
+                {localState.registerPanel && <SignUpWindow panelFunction = {changePanel} />}
+                
+                {!localState.registerPanel && <LoginWindow panelFunction = {changePanel} />}
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import React, {useState, createContext} from 'react';
+import React, {useState, useEffect, createContext} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Home from './Home';
 import About from './About';
@@ -13,9 +13,29 @@ export const AppContext = createContext();
 
 const App = () => {
 
-const [state, setState] = useState({ signUpForm: false });
+    useEffect(() => {
+        switch(state.loginStatus){
+        case true:
 
+            localStorage.setItem('name', 'asdasd');
+            localStorage.setItem('token', state.userToken);
+        case false:
+            localStorage.clear();
+        default:
+        break;
+        }
+        console.log(state, localStorage);
 
+    });
+
+const [state, setState] = useState({ 
+    signUpForm: true,
+    loginStatus: localStorage.name ? true : false,
+    userName: null,
+    userToken: null
+ });
+
+console.log('state', state)
 
 
     return (

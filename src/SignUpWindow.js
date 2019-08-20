@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from './App'; 
 
-const SignUpWindow = (prop) => {
+const SignUpWindow = () => {
 
+    console.log(process.env.REACT_APP_API_URL)
     let name;
     let email;
     let password;
@@ -24,7 +25,7 @@ const SignUpWindow = (prop) => {
         }
         fetch(
             // URL
-            `${process.env.REACT_APP_API_URL}auth/register`, 
+            `${process.env.REACT_APP_API_URL}auth/register`,  
             // Data
             {
                 method: 'POST',
@@ -33,7 +34,9 @@ const SignUpWindow = (prop) => {
             }
         )
         .then(res => {
-            if(res.status === "400") {
+
+            // If the client makes BAD request
+            if(!res.ok) {
                 // Handle the error
                 setLocalState({ 
                     ...localState, 
@@ -41,7 +44,9 @@ const SignUpWindow = (prop) => {
                     errorMessage: true
                 })
 
-            } else {
+            } 
+            // Else if request is successful
+            else {
                 // Parse json data 
                 res.json();
 
@@ -53,16 +58,17 @@ const SignUpWindow = (prop) => {
                 })
             }
         }) 
+
+        // If the request makes it to the backend
         .catch(err => {
             console.log('err', err);
         })
     }
     const closeSignUp = () => {
-        setState({ signUpForm: false })
+        setState({ ...state, signUpForm: false })
     }
     return(<div className="SignUpWindow">
         <div className="container">
-            <h2>Register</h2>
 
             <label>Name</label>
             <input ref={comp=> name = comp} type="text" className="form-control"/>
@@ -78,7 +84,6 @@ const SignUpWindow = (prop) => {
             
             <button onClick={registerUser} className="btn btn-primary">Register</button>
             <button onClick={closeSignUp} className="btn btn-danger">Cancel</button>
-            <a onClick={prop.panelFunction}>Already a user? Signin</a>
 
             {
                 localState.successMessage && 

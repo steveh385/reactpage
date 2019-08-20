@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Button from './Button';
 import { AppContext } from './App'
 
@@ -12,7 +12,7 @@ const SignUpButton = (prop) => {
     // useContext will give the values from context
     const [state, setState] = useContext(AppContext);
     const openWindow = () => {
-        setState({ signUpForm: true });
+        setState({ ...state, signUpForm: true });
     }
 
     return (

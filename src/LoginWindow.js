@@ -1,21 +1,21 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AppContext } from './App'; 
 
-const LoginWindow = (prop) => {
+const LoginWindow = () => {
 
     let email;
     let password;
 
     const [state, setState] = useContext(AppContext);
 
-    const closeWindow = () => {
-        setState({ signUpForm: false })
-    }
-
     const [localState, setLocalState] = useState({
         successMessage: false,
         errorMessage: false
-    })
+    });
+
+    const closeWindow = () => {
+        setState({ ...state, signUpForm: false })
+    };
 
     const loginUser = () => {
 
@@ -32,7 +32,7 @@ const LoginWindow = (prop) => {
                 headers: {"Content-Type": "application/json"}
             }
         ).then(async res=>{
-            if(res.status === "400") {
+            if(!res.ok) {
                 setLocalState({ 
                     ...localState, 
                     successMessage: false, 
@@ -40,23 +40,29 @@ const LoginWindow = (prop) => {
                 })
             } else {
                 let userInfo = await res.json();
-                console.log(userInfo)
 
+                // Show the success message when logged in
                 setLocalState({ 
                     ...localState, 
                     successMessage: true, 
                     errorMessage: false 
-                })
+                });
+
+                setState({ 
+                    ...state, 
+                    signUpForm: false, 
+                    loginStatus: true,
+                    userName: userInfo.name,
+                    userToken: userInfo.token
+                });
             }
         })
-
-        // Store the JTW in localStorage
     }
+
 
     return(<div className="LoginWindow">
     <div className="container">
 
-        <h2>Login</h2>        
         <label>Email</label>
         <input ref={comp=> email = comp} type="text" className="form-control" />
 
@@ -65,7 +71,6 @@ const LoginWindow = (prop) => {
 
         <button onClick={loginUser} className="btn btn-primary">Login</button>
         <button onClick={closeWindow} className="btn btn-danger">Cancel</button>
-        <a onClick={prop.panelFunction}>new User? CLick here</a>
 
         {
             localState.successMessage && 

@@ -17,10 +17,15 @@ const Feeds = () => {
             <Jumbotron img="img/feedsfitness.jpg"/>
             <div className="container">
                 <h1>The Feeds Page</h1>
-                <FeedMedia />
-                <FeedMedia />
-                <FeedMedia />
-                <FeedMedia />
+                {
+                  !state.user.length === 0 &&
+                  <div>
+                    <FeedMedia />
+                    <FeedMedia />
+                    <FeedMedia />
+                    
+                </div>
+                }
             </div>
             <SignUp img="img/bg-masthead.jpg" />
             <Footer />

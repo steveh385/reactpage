@@ -2,29 +2,24 @@
 .Home {
   text-align: center;
 }
-
-.NavBar .nav-links{
-  display: inline-flex;
-  width: 100%;
-}
-
 .NavBar .logo {
-  margin-right: auto;
-  color: rgb(7, 31, 248);
-  
+  margin-left: 48px;
+  color: rgb(7, 31, 248);  
 }
 
 .NavBar .logo i {
   font-size:  45px;
 }
 
+
 .NavBar .logo:hover {
   color: rgb(69, 69, 196);
 }
-
-.NavBar .link {
-  margin-left: 28px;
+.navbar-toggler{
+  margin-right: 10px;
+  margin-left: auto;
 }
+
 .Testimonials {
   max-width: 320px;
 }
